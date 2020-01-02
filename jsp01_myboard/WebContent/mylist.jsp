@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>mylist</title>
+<title>글목록</title>
 </head>
 <body>
 
@@ -44,7 +44,7 @@
 		<tr>
 			<td><%= list.get(i).getMyNo() %></td>
 			<td><%= list.get(i).getMyName() %></td>
-			<td><a href="#"><%= list.get(i).getMyTitle() %></a></td>
+			<td><a href="mydetail.jsp"><%= list.get(i).getMyTitle() %></a></td>
 			<td><%= list.get(i).getMyDate() %></td>
 		</tr>
 		
@@ -54,7 +54,7 @@
 		
 		<tr>
 			<td colspan="4" align="right">
-				<input type="button" onclick="" value="글쓰기">
+				<input type="button" onclick="location.href='myinsert.jsp'" value="글쓰기"/>
 			</td>
 		</tr>
 		
