@@ -73,12 +73,11 @@ public class MyDAO extends JDBCTemplate {
 
 			// 4. 실행 및 리턴
 			rs = pstmt.executeQuery();
-			rs.next();
-			dto.setMyName(rs.getString("MYNAME"));
-			dto.setMyTitle(rs.getString("MYTITLE"));
-			dto.setMyContent(rs.getString("MYCONTENT"));
-			dto.setMyDate(rs.getDate("MYDATE"));
-
+			
+			while(rs.next()) {
+				dto = new MyDTO(rs.getInt("MYNO"), rs.getString("MYNAME"), rs.getString("MYTITLE"), rs.getString("MYCONTENT"), rs.getDate("MYDATE"));
+			}
+			
 		} catch (SQLException e) {
 			System.out.println("[ ERROR ] : MyDAO - selectOne() 쿼리 실행 오류");
 			e.printStackTrace();
