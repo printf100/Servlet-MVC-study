@@ -22,7 +22,7 @@
 	List<MyDTO> list = dao.selectList();
 %>
 
-	<h1>List</h1>
+	<h1>LIST</h1>
 	
 	<table border="1">
 		<col width="50">
@@ -44,7 +44,7 @@
 		<tr>
 			<td><%= list.get(i).getMyNo() %></td>
 			<td><%= list.get(i).getMyName() %></td>
-			<td><a href="mydetail.jsp"><%= list.get(i).getMyTitle() %></a></td>
+			<td><a href="mydetail.jsp?MYNO=<%= list.get(i).getMyNo() %>"><%= list.get(i).getMyTitle() %></a></td>
 			<td><%= list.get(i).getMyDate() %></td>
 		</tr>
 		
