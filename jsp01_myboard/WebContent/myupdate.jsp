@@ -24,6 +24,7 @@
 	<h1>글 수정하기</h1>
 	
 	<form action="myupdateRes.jsp?MYNO=<%= myNo %>" method="post">
+		<input type="hidden" name="MYNO" value="<%= myNo %>">
 		<table border="1">
 			<tr>
 				<th>이름</th>
