@@ -136,6 +136,7 @@ public class MVCBoardDAOImpl implements MVCBoardDAO {
 			pstmt.setString(1, dto.getWriter());
 			pstmt.setString(2, dto.getTitle());
 			pstmt.setString(3, dto.getContent());
+			pstmt.setInt(4, dto.getSeq());
 			
 			res = pstmt.executeUpdate();
 			
@@ -221,6 +222,10 @@ public class MVCBoardDAOImpl implements MVCBoardDAO {
 			if(res == seqs.length) {
 				commit(conn);
 				r = true;
+			} else {
+				rollback(conn);
+				res = 0;
+				r = false;
 			}
 			
 		} catch (SQLException e) {

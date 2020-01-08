@@ -10,7 +10,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글 목록</title>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+
+		function allChk(checked) {
+			
+			var chks = document.getElementsByName("chk");
+			
+			for(var i=0; i<chks.length; i++) {
+				if(checked) {
+					chks[i].checked = true;
+				} else if(!checked) {
+					chks[i].checked = false;
+				}
+			}
+		}
+		
+	</script>
+
 </head>
 
 <%
@@ -50,7 +69,7 @@
 				<td><input type="checkbox" name="chk" value="<%= dto.getSeq() %>"></td>
 				<td><%= dto.getSeq() %></td>
 				<td><%= dto.getWriter() %></td>
-				<td><a href=""><%= dto.getTitle() %></a></td>
+				<td><a href="MVCController.jsp?command=content&SEQ=<%= dto.getSeq() %>"><%= dto.getTitle() %></a></td>
 				<td><%= dto.getRegDate() %></td>
 			</tr>
 <%
