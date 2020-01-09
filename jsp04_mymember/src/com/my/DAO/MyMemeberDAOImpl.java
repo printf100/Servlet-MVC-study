@@ -37,6 +37,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 				dto.setMyNo(rs.getInt("MYNO"));
 				dto.setId(rs.getString("ID"));
 				dto.setPw(rs.getString("PW"));
+				dto.setName(rs.getString("NAME"));
 				dto.setAddr(rs.getString("ADDR"));
 				dto.setPhone(rs.getString("PHONE"));
 				dto.setEmail(rs.getString("EMAIL"));
@@ -80,6 +81,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 				dto.setMyNo(rs.getInt("MYNO"));
 				dto.setId(rs.getString("ID"));
 				dto.setPw(rs.getString("PW"));
+				dto.setName(rs.getString("NAME"));
 				dto.setAddr(rs.getString("ADDR"));
 				dto.setPhone(rs.getString("PHONE"));
 				dto.setEmail(rs.getString("EMAIL"));
@@ -146,7 +148,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MyMemberDTO dto = null;
+		MyMemberDTO dto = null;	// new MyMemberDTO()로 객체 생성이 되었을 때는 null이 아님!!
 		String sql = " SELECT * FROM MYMEMBER WHERE ID = ? AND PW = ? AND ENABLED = ? ";
 		
 		try {

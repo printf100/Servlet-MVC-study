@@ -28,7 +28,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="LOGIN">
-					<input type="button" value="JOIN US" onclick="">
+					<input type="button" value="JOIN US" onclick="location.href='loginController.jsp?command=join'">
 				</td>
 			</tr>
 		</table>

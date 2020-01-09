@@ -12,57 +12,48 @@ public class MyMemberBizImpl implements MyMemberBiz {
 
 	@Override
 	public List<MyMemberDTO> selectList() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectList();
 	}
 
 	@Override
 	public List<MyMemberDTO> selecteEnabled() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selecteEnabled();
 	}
 
 	@Override
 	public int updateRole(int myNo, String myRole) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.updateRole(myNo, myRole);
 	}
 
 	
 	// 로그인
 	@Override
 	public MyMemberDTO login(String id, String pw) {
-		
 		return dao.login(id, pw);
 	}
 
 	@Override
 	public MyMemberDTO idChk(String id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int insertUser(MyMemberDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public MyMemberDTO selectOneUser(int myNo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int updateUser(MyMemberDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int deleteUser(int myNo) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
