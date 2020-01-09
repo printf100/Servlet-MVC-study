@@ -34,10 +34,10 @@
 	
 	<div>
 		<div>
-			<a href="myController.jsp?command=selectList">회원정보 조회(ALL)</a>
+			<a href="loginController.jsp?command=selectList">회원정보 조회(ALL)</a>
 		</div>
 		<div>
-			<a href="myController.jsp?command=selectEnabled">회원정보 조회(ENABLED)</a>
+			<a href="loginController.jsp?command=selectEnabled">회원정보 조회(ENABLED)</a>
 		</div>
 	</div>
 

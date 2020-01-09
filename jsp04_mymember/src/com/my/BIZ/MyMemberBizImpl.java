@@ -34,27 +34,27 @@ public class MyMemberBizImpl implements MyMemberBiz {
 
 	@Override
 	public MyMemberDTO idChk(String id) {
-		return null;
+		return dao.idChk(id);
 	}
 
 	@Override
 	public int insertUser(MyMemberDTO dto) {
-		return 0;
+		return dao.insertUser(dto);
 	}
 
 	@Override
 	public MyMemberDTO selectOneUser(int myNo) {
-		return null;
+		return dao.selectOneUser(myNo);
 	}
 
 	@Override
 	public int updateUser(MyMemberDTO dto) {
-		return 0;
+		return dao.updateUser(dto);
 	}
 
 	@Override
 	public int deleteUser(int myNo) {
-		return 0;
+		return dao.deleteUser(myNo);
 	}
 
 }

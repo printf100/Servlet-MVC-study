@@ -11,6 +11,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+	<script type="text/javascript">
+	
+		function updateRole(myno) {
+			location.href="loginController.jsp?command=updateRoleForm&MYNO="+myno;
+		}
+	
+	</script>
+
 </head>
 
 <%
@@ -19,7 +28,7 @@
 
 <body>
 
-	<h1>MYBOARD :: SELECT_USER_LIST(ENABLED)</h1>
+	<h1>MYMEMBER :: SELECT_USER_LIST(ENABLED)</h1>
 	
 	<table border="1">
 		<tr>
@@ -32,6 +41,7 @@
 			<th>이메일</th>
 			<th>가입여부</th>
 			<th>등급</th>
+			<th>등급변경</th>
 		</tr>
 <%
 		for(MyMemberDTO dto : list) {
@@ -46,6 +56,7 @@
 			<td><%= dto.getEmail() %></td>
 			<td><%= dto.getEnabled().equals("Y") ? "가입" : "탈퇴" %></td>
 			<td><%= dto.getMyRole() %></td>
+			<td><button onclick="updateRole(<%= dto.getMyNo() %>);">변경</button></td>
 		</tr>
 <%
 		}

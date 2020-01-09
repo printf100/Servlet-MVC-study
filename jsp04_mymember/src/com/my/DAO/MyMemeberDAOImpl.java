@@ -250,6 +250,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 				dto.setMyNo(rs.getInt("MYNO"));
 				dto.setId(rs.getString("ID"));
 				dto.setPw(rs.getString("PW"));
+				dto.setName(rs.getString("NAME"));
 				dto.setAddr(rs.getString("ADDR"));
 				dto.setPhone(rs.getString("PHONE"));
 				dto.setEmail(rs.getString("EMAIL"));
