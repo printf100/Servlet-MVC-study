@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원정보(ENABLED)</title>
 
 	<script type="text/javascript">
 	
@@ -28,7 +28,7 @@
 
 <body>
 
-	<h1>MYMEMBER :: SELECT_USER_LIST(ENABLED)</h1>
+	<h1>MYMEMBER :: 회원정보(ENABLED)</h1>
 	
 	<table border="1">
 		<tr>

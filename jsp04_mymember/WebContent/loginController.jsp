@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.List"%>
 <%@page import="com.my.DTO.MyMemberDTO"%>
 <%@page import="com.my.BIZ.MyMemberBizImpl"%>
@@ -37,6 +38,8 @@
 			
 			if(dto.getMyRole().equals("ADMIN")) {
 				response.sendRedirect("adminMain.jsp");
+			} else if(dto.getMyRole().equals("USER")) {
+				response.sendRedirect("userMain.jsp");
 			}
 			
 		} else {	// 로그인 실패했을 때
@@ -101,33 +104,137 @@
 %>
 		<script type="text/javascript">
 			alert("등급 변경 실패");
-			location.href="loginController.jsp?command=selectEnabled?MYNO=" + MYNO;
+			location.href="loginController.jsp?command=updateRoleForm&MYNO=" + MYNO;
 		</script>
 <%
 		}
 	}
 	
+	
+	
+	// 내 정보 조회하기
+	else if(command.equals("myInfo")) {
+		int MYNO = Integer.parseInt(request.getParameter("MYNO"));
+		
+		MyMemberDTO dto = biz.selectOneUser(MYNO);
+		request.setAttribute("myInfo", dto);
+		
+		pageContext.forward("userInfo.jsp");
+	}
+	
+	// 내 정보 수정하는 화면으로
+	else if(command.equals("updateMyInfoForm")) {
+		int MYNO = Integer.parseInt(request.getParameter("MYNO"));
+		
+		MyMemberDTO dto = biz.selectOneUser(MYNO);
+		request.setAttribute("myInfo", dto);
+		
+		pageContext.forward("userUpdate.jsp");
+	}
+	
+	// 내 정보 수정 완료
+	else if(command.equals("updateMyInfoRes")) {
+		int MYNO = Integer.parseInt(request.getParameter("MYNO"));
+		
+		MyMemberDTO dto = new MyMemberDTO();
+		dto.setPw(request.getParameter("PW"));
+		dto.setName(request.getParameter("NAME"));
+		dto.setAddr(request.getParameter("ADDR"));
+		dto.setPhone(request.getParameter("PHONE"));
+		dto.setEmail(request.getParameter("EMAIL"));
+		dto.setMyNo(MYNO);
+		
+		int res = biz.updateUser(dto);
+		
+		if(res > 0) {
+%>
+		<script type="text/javascript">
+			alert("내 정보 수정 완료!");
+			location.href="loginController.jsp?command=myInfo&MYNO=" + MYNO;
+		</script>
+<%
+		} else {
+%>
+		<script type="text/javascript">
+			alert("내 정보 수정 실패");
+			location.href="loginController.jsp?command=updateMyInfoForm&MYNO=" + MYNO;
+		</script>
+<%
+		}
+	}
+	
+	// 탈퇴하기
+	else if(command.equals("deleteUser")) {
+		int MYNO = Integer.parseInt(request.getParameter("MYNO"));
+		
+		int res = biz.deleteUser(MYNO);
+		
+		if(res > 0) {
+%>
+		<script type="text/javascript">
+			alert("탈퇴 완료!");
+			location.href="index.jsp";
+		</script>
+<%
+		} else {
+%>
+		<script type="text/javascript">
+			alert("탈퇴 실패");
+			location.href="loginController.jsp?command=myInfo&MYNO=" + MYNO;
+		</script>
+<%
+	}
+	}
+	
 	// 회원가입 화면으로
-	else if(command.equals("join")) {
+	else if(command.equals("joinForm")) {
 		response.sendRedirect("insertUser.jsp");
 	}
 	
+	// 아이디 중복체크 (js)
+	else if (command.equals("idChk")) {
+		String ID = request.getParameter("ID");
+		MyMemberDTO dto = biz.idChk(ID);
+
+		boolean idNotUsed = true; // 존재하지 않음
+
+		if (dto != null) { // 이미 존재하는 계정
+			idNotUsed = false;
+		}
+		
+		//response.sendRedirect("idChk.jsp?idNotUsed=" + idNotUsed);
+	}
+
+	// 아이디 중복체크 (ajax)
+	else if (command.equals("ajaxIdChk")) {
+		String ID = request.getParameter("ID");
+		MyMemberDTO dto = biz.idChk(ID);
+
+		boolean idNotUsed = true; // 존재하지 않음
+
+		if (dto != null) { // 이미 존재하는 계정
+			idNotUsed = false;
+		}
+
+		PrintWriter pout = response.getWriter();
+		pout.println(idNotUsed);
+	}
+
 	// 회원가입 완료
-	else if(command.equals("joinRes")) {
+	else if (command.equals("joinRes")) {
 		MyMemberDTO dto = new MyMemberDTO();
 		dto.setId(request.getParameter("ID"));
 		dto.setPw(request.getParameter("PW"));
 		dto.setName(request.getParameter("NAME"));
 		dto.setAddr(request.getParameter("ADDR"));
 		dto.setPhone(request.getParameter("PHONE"));
-		dto.setEmail(request.getParameter("EAMIL"));
+		dto.setEmail(request.getParameter("EMAIL"));
 		dto.setEnabled("Y");
 		dto.setMyRole(request.getParameter("MYROLE"));
-		
+
 		int res = biz.insertUser(dto);
-		
-		if(res > 0) {
-	
+
+		if (res > 0) {
 %>
 		<script type="text/javascript">
 			alert("회원가입 완료!");

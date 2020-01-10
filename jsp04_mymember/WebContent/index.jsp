@@ -9,6 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <title>메인</title>
+
+	<script type="text/javascript">
+		
+		function joinForm() {
+			location.href = "loginController.jsp?command=joinForm";
+		}	
+	
+	</script>
+
 </head>
 <body>
 
@@ -28,7 +37,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="LOGIN">
-					<input type="button" value="JOIN US" onclick="location.href='loginController.jsp?command=join'">
+					<input type="button" value="JOIN US" onclick="joinForm();">
 				</td>
 			</tr>
 		</table>

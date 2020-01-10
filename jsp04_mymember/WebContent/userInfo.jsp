@@ -1,5 +1,4 @@
 <%@page import="com.my.DTO.MyMemberDTO"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -10,16 +9,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원정보(ALL)</title>
+<title>내 정보</title>
 </head>
 
 <%
-	List<MyMemberDTO> list = (List<MyMemberDTO>)request.getAttribute("userList");
+	MyMemberDTO dto = (MyMemberDTO) request.getAttribute("myInfo");
 %>
 
 <body>
 
-	<h1>MYBOARD :: 회원정보(ALL)</h1>
+	<h1><%= dto.getName() %>님의 정보</h1>
 	
 	<table border="1">
 		<tr>
@@ -30,12 +29,8 @@
 			<th>주소</th>
 			<th>전화번호</th>
 			<th>이메일</th>
-			<th>가입여부</th>
 			<th>등급</th>
 		</tr>
-<%
-		for(MyMemberDTO dto : list) {
-%>
 		<tr>
 			<td><%= dto.getMyNo() %></td>
 			<td><%= dto.getId() %></td>
@@ -44,15 +39,13 @@
 			<td><%= dto.getAddr() %></td>
 			<td><%= dto.getPhone() %></td>
 			<td><%= dto.getEmail() %></td>
-			<td><%= dto.getEnabled().equals("Y") ? "가입" : "탈퇴" %></td>
 			<td><%= dto.getMyRole() %></td>
 		</tr>
-<%
-		}
-%>
 		<tr>
 			<td colspan="9">
-				<button onclick="location.href='adminMain.jsp'">메인으로</button>
+				<input type="button" onclick="location.href='loginController.jsp?command=updateMyInfoForm&MYNO=<%= dto.getMyNo() %>'" value="정보수정">
+				<input type="button" onclick="location.href='loginController.jsp?command=deleteUser&MYNO=<%= dto.getMyNo() %>'" value="탈퇴">
+				<button onclick="location.href='userMain.jsp'">메인으로</button>
 			</td>
 		</tr>
 	</table>

@@ -187,7 +187,45 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 
 	@Override
 	public MyMemberDTO idChk(String id) {
-		return null;
+		
+		Connection conn = getConnection();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		MyMemberDTO dto = null;	// 컨트롤러에서 null 체크를 할거기 때문에 null로 셋팅
+								// new로 객체 생성해둘 거면 컨트롤러에서 if(dto.getId() != null) 이라고 해야함
+		String sql = " SELECT * FROM MYMEMBER WHERE ID = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto = new MyMemberDTO();
+				
+				dto.setMyNo(rs.getInt("MYNO"));
+				dto.setId(id);
+				dto.setPw(rs.getString("PW"));
+				dto.setName(rs.getString("NAME"));
+				dto.setAddr(rs.getString("ADDR"));
+				dto.setPhone(rs.getString("PHONE"));
+				dto.setEmail(rs.getString("EMAIL"));
+				dto.setEnabled(rs.getString("ENABLED"));
+				dto.setMyRole(rs.getString("MYROLE"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[ERROR] : MyMemeberDAOImpl - idChk 쿼리 실행 오류");
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
+		
+		return dto;
 	}
 
 	// 회원가입
@@ -197,7 +235,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 		Connection conn = getConnection();
 		
 		PreparedStatement pstmt = null;
-		String sql = " INSERT INTO MYMEMBER VALUES (MYMEMBERSEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?) ";
+		String sql = " INSERT INTO MYMEMBER VALUES (MYMEMBERSEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, 'Y', ?) ";
 		int res = 0;
 		
 		try {
@@ -209,8 +247,7 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 			pstmt.setString(4, dto.getAddr());
 			pstmt.setString(5, dto.getPhone());
 			pstmt.setString(6, dto.getEmail());
-			pstmt.setString(7, dto.getEnabled());
-			pstmt.setString(8, dto.getMyRole());
+			pstmt.setString(7, dto.getMyRole());
 			
 			res = pstmt.executeUpdate();
 			
@@ -277,19 +314,18 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 		Connection conn = getConnection();
 		
 		PreparedStatement pstmt = null;
-		String sql = " UPDATE MYMEMBER SET ID=?, PW=?, NAME=?, ADDR=?, PHONE=?, EMAIL=? WHERE MYNO = ? ";
+		String sql = " UPDATE MYMEMBER SET PW=?, NAME=?, ADDR=?, PHONE=?, EMAIL=? WHERE MYNO = ? ";
 		int res = 0;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, dto.getId());
-			pstmt.setString(2, dto.getPw());
-			pstmt.setString(3, dto.getName());
-			pstmt.setString(4, dto.getAddr());
-			pstmt.setString(5, dto.getPhone());
-			pstmt.setString(6, dto.getEmail());
-			pstmt.setInt(7, dto.getMyNo());
+			pstmt.setString(1, dto.getPw());
+			pstmt.setString(2, dto.getName());
+			pstmt.setString(3, dto.getAddr());
+			pstmt.setString(4, dto.getPhone());
+			pstmt.setString(5, dto.getEmail());
+			pstmt.setInt(6, dto.getMyNo());
 			
 			res = pstmt.executeUpdate();
 			
@@ -310,7 +346,33 @@ public class MyMemeberDAOImpl extends JDBCTemplate implements MyMemeberDAO {
 
 	@Override
 	public int deleteUser(int myNo) {
-		return 0;
+		
+		Connection conn = getConnection();
+		
+		PreparedStatement pstmt = null;
+		String sql = " UPDATE MYMEMBER SET ENABLED='N' WHERE MYNO = ? ";
+		int res = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, myNo);
+			
+			res = pstmt.executeUpdate();
+			
+			if(res > 0) {
+				commit(conn);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[ERROR] : MyMemeberDAOImpl - deleteUser 쿼리 실행 오류");
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(conn);
+		}
+		
+		return res;
 	}
 
 }
