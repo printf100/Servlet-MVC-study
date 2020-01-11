@@ -1,3 +1,6 @@
+<%@page import="org.json.simple.JSONArray"%>
+<%@page import="org.json.simple.JSONValue"%>
+<%@page import="org.json.simple.JSONObject"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="java.util.List"%>
 <%@page import="com.my.DTO.MyMemberDTO"%>
@@ -8,14 +11,7 @@
     
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>로그인 처리</title>
-</head>
-<body>
+
 <%
 	String command = request.getParameter("command");
 	System.out.println("[ " + command + " ]");
@@ -210,14 +206,20 @@
 		String ID = request.getParameter("ID");
 		MyMemberDTO dto = biz.idChk(ID);
 
-		boolean idNotUsed = true; // 존재하지 않음
+		System.out.println(ID);
+		
+		JSONObject json = new JSONObject();
 
+		boolean idNotUsed = true;
 		if (dto != null) { // 이미 존재하는 계정
 			idNotUsed = false;
 		}
+		
+		json.put("idNotUsed", idNotUsed);
 
 		PrintWriter pout = response.getWriter();
-		pout.println(idNotUsed);
+		pout.print(json.toString());
+		pout.flush();
 	}
 
 	// 회원가입 완료
@@ -251,8 +253,3 @@
 		}
 	}
 %>
-
-	<h1 style="color:plum;">잘못 왔따</h1>
-
-</body>
-</html>
