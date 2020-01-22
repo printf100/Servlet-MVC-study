@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SCORE</title>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+	
+		function getParameterValues() {
+			
+			var name = "name="+encodeURIComponent($("#name").val());	// name에 &와 같은 게 포함되었을 때 의도대로 해석할 수 있도록 이스케이핑해주는 것
+			var kor = "kor="+$("#kor").val();
+			var eng = "eng="+$("#eng").val();
+			var math = "math="+$("#math").val();
+			
+			var query = name+"&"+kor+"&"+eng+"&"+math;
+			
+			return query;
+		}
+		
+		$(function() {
+			$("#process").click(function() {
+				
+				$.ajax({
+					url: "score.cal?"+getParameterValues(),	// request를 보낼 주소
+					dataType: "json",	// 서버로부터 받을 데이터타입
+					success: function(msg) {	// 성공하면 json형태의 데이터인 msg를 받아서
+						console.log(msg);
+						$("#result").html(	// div에 string html요소 추가
+								decodeURIComponent(msg.name)+"님의 총점은 " + msg.sum + "이고, 평균은 " + msg.avg + "입니다."
+						);	// encodeURIComponent로 인코딩된 문자열을 정상적인 문자열로 되돌려줌, msg의 sum과 avg를 꺼냄
+					},
+					error: function() {
+						alert("통신 실패");
+					}
+				})
+			})
+		})
+	
+	</script>
+
+</head>
+<body>
+
+	<h1>성적 처리 프로그램</h1>
+	
+	이름 : <input type="text" id="name"><br>
+	국어 : <input type="text" id="kor"><br>
+	영어 : <input type="text" id="eng"><br>
+	수학 : <input type="text" id="math"><br>
+	
+	<input type="button" id="process" value="성적 처리"><br>
+	
+	<div id="result">
+	</div>
+
+</body>
+</html>
