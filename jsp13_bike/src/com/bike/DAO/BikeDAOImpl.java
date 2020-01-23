@@ -69,7 +69,7 @@ public class BikeDAOImpl extends JDBCTemplate implements BikeDAO {
 		Connection conn = getConnection();
 		
 		PreparedStatement pstmt = null;
-		String sql = " DELETE * FROM BIKE ";
+		String sql = " DELETE FROM BIKE ";
 		int res = 0;
 		
 		try {

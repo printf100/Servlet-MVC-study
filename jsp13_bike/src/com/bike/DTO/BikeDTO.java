@@ -2,9 +2,9 @@ package com.bike.DTO;
 
 public class BikeDTO {
 
+	private String ADDR_GU;
 	private int CONTENT_ID;
 	private String CONTENT_NAME;
-	private String ADDR_GU;
 	private String NEW_ADDR;
 	private int CRADLE_COUNT;
 	private double LONGITUDE;
@@ -14,11 +14,11 @@ public class BikeDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BikeDTO(int cONTENT_ID, String cONTENT_NAME, String aDDR_GU, String nEW_ADDR, int cRADLE_COUNT,
+	public BikeDTO(String aDDR_GU, int cONTENT_ID, String cONTENT_NAME, String nEW_ADDR, int cRADLE_COUNT,
 			double lONGITUDE, double lATITUDE) {
+		ADDR_GU = aDDR_GU;
 		CONTENT_ID = cONTENT_ID;
 		CONTENT_NAME = cONTENT_NAME;
-		ADDR_GU = aDDR_GU;
 		NEW_ADDR = nEW_ADDR;
 		CRADLE_COUNT = cRADLE_COUNT;
 		LONGITUDE = lONGITUDE;
