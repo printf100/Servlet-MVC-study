@@ -136,4 +136,37 @@ public class CalBoardDAO extends JDBCTemplate {
 		
 		return list;
 	}
+	
+	public int getCalCount(String id, String yyyyMMdd) {
+		
+		Connection conn = getConnection();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = " SELECT COUNT(*) FROM CALBOARD WHERE ID = ? AND SUBSTR(MDATE, 1, 8) = ? ";
+		int res = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			pstmt.setString(2, yyyyMMdd);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				res = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("[ERROR] : CalBoardDAO - getCalCount 쿼리 실행 오류");
+			e.printStackTrace();
+			
+		} finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
+		
+		return res;
+	}
 }

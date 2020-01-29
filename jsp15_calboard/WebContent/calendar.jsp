@@ -40,11 +40,65 @@
 			text-decoration: none;
 		}
 		
-		.clist {
-			font-size: 5pt;
+		.clist > p {
+			font-size: 5px;
+			margin: 1px;
+			background-color: skyblue;
+		}
+		
+		.cPreview {
+			position: absolute;
+			top: -30px;
+			left: 10px;
+			background-color: plum;
+			width: 40px;
+			height: 40px;
+			text-align: center;
+			line-height: 40px;
+			border-radius: 40px 40px 40px 1px;
 		}
 	
 	</style>
+	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+		
+		function isTwo(n) {
+			return (n.length < 2)? "0"+n : n;
+		}
+	
+		$(function() {
+			
+			$(".countView").hover(function() {
+			
+				var aCountView = $(this);	// this : a태그
+				var year = $(".year").text().trim();
+				var month = $(".month").text().trim();
+				var cDate = aCountView.text().trim();
+				var yyyyMMdd = year + isTwo(month) + isTwo(cDate);
+				//alert(yyyyMMdd);
+				
+				$.ajax({
+					type: "POST",	// 전송방식
+					url: "calcountajax.do",	// 요청 경로
+					data: "id=kh&yyyyMMdd="+yyyyMMdd,	// 전송 파라미터
+					dataType: "json",	// 받는 데이터 타입
+					async: false,	// 동기 (true : 비동기)
+					success: function(msg) {
+						var count = msg.count;
+						aCountView.after("<div class='cPreview'>" + count + "</div>");
+					},
+					error: function() {
+						alert("서버 통신 실패");
+					}
+				});
+			
+			}, function() {
+				$(".cPreview").remove();
+			});
+		});
+	
+	</script>
 
 </head>
 
@@ -119,7 +173,7 @@
 		%>
 		
 			<td>
-				<a href="calendar.do?command=list&year=<%= year %>&month=<%= month %>&date=<%= i %>" style="color:<%= Util.fontColor(i, dayOfWeek) %>"><%= i %></a>
+				<a class="countView" href="calendar.do?command=list&year=<%= year %>&month=<%= month %>&date=<%= i %>" style="color:<%= Util.fontColor(i, dayOfWeek) %>"><%= i %></a>
 				<a href="insertcalboard.jsp?year=<%= year %>&month=<%= month %>&date=<%= i %>&lastDayOfMonth=<%= lastDayOfMonth %>">
 					<img alt="일정추가" src="img/pen.png" style="width:10px; height:10px;">
 				</a>
