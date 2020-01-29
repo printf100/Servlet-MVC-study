@@ -2,6 +2,9 @@ package com.cal.DAO;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
+
+import com.cal.DTO.CalBoardDTO;
 
 public class Util {
 	
@@ -46,5 +49,19 @@ public class Util {
 	public static String isTwo(String msg) {
 		
 		return (msg.length() < 2) ? "0"+msg : msg;
+	}
+	
+	public static String getCalView(int date, List<CalBoardDTO> clist) {
+		
+		String d = isTwo(date + "");
+		String res = "";
+		
+		for(CalBoardDTO dto : clist) {
+			if(dto.getmDate().substring(6, 8).equals(d)) {	// 일
+				res += "<p>" + ((dto.getTitle().length() > 6) ? dto.getTitle().substring(0, 6) + "..." : dto.getTitle()) + "</p>";
+			}
+		}
+		
+		return res;
 	}
 }

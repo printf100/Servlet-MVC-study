@@ -1,3 +1,6 @@
+<%@page import="com.cal.DTO.CalBoardDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.cal.DAO.CalBoardDAO"%>
 <%@page import="com.cal.DAO.Util"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -35,6 +38,10 @@
 		
 		a {
 			text-decoration: none;
+		}
+		
+		.clist {
+			font-size: 5pt;
 		}
 	
 	</style>
@@ -76,6 +83,9 @@
 	int lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	
 	// 달력의 일정 표현
+	CalBoardDAO dao = new CalBoardDAO();
+	String yyyyMM = year + Util.isTwo(String.valueOf(month));
+	List<CalBoardDTO> clist = dao.getCalViewList("kh", yyyyMM);
 %>
 
 <body>
@@ -113,6 +123,9 @@
 				<a href="insertcalboard.jsp?year=<%= year %>&month=<%= month %>&date=<%= i %>&lastDayOfMonth=<%= lastDayOfMonth %>">
 					<img alt="일정추가" src="img/pen.png" style="width:10px; height:10px;">
 				</a>
+				<div class="clist">
+					<%= Util.getCalView(i, clist) %>
+				</div>
 			</td>
 		
 		<%
